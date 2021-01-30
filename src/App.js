@@ -3,7 +3,11 @@ import { HashRouter, Route, Switch } from 'react-router-dom';
 import logo from './logo.svg';
 import './assets/scss/App.scss';
 
-const loading = (<img src={logo} className="App-logo" alt="logo" />)
+const loading = (
+  <div className="el-center">
+    <img src={logo} className="App-logo" alt="logo" />
+  </div>
+)
 
 const TheLayout = React.lazy(() => import('./components/TheLayout.js'))
 class App extends Component {
@@ -12,16 +16,18 @@ class App extends Component {
     this.setGoogleAnalytic()
   }
   setGoogleAnalytic(){
-    (function(){
-        const s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
-        s1.async=true;
-        s1.src='https://www.googletagmanager.com/gtag/js?id=G-WR966Y57H4';
-        s0.parentNode.insertBefore(s1,s0);
-    })();
-
-    const script = document.createElement("script");
-    script.innerHTML = this.analytics('G-WR966Y57H4');
-    document.head.appendChild(script);
+    if(process.env.REACT_APP_MODE === 'PRODUCTION') {
+      (function(){
+          const s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+          s1.async=true;
+          s1.src='https://www.googletagmanager.com/gtag/js?id=G-WR966Y57H4';
+          s0.parentNode.insertBefore(s1,s0);
+      })();
+  
+      const script = document.createElement("script");
+      script.innerHTML = this.analytics('G-WR966Y57H4');
+      document.head.appendChild(script);
+    }
   }
   analytics(id){
     return `

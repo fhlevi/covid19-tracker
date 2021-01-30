@@ -9,7 +9,11 @@ import logo from '../logo.svg';
 // routes config
 import routes from '../router/routes';
 
-const loading = (<img src={logo} className="App-logo" alt="logo" />)
+const loading = (
+    <div className="el-center">
+        Loading...
+    </div>
+)
 
 const TheContent = () => {
     return (
