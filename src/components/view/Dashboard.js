@@ -5,7 +5,7 @@ import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import AnimatedNumber from "animated-number-react";
 import {toNumber} from '../../helper/stringToCurrency';
-import Emitter from '../../helper/eventBus';
+import { useSelector } from 'react-redux';
 
 let cardGrouping = [
     {confirmed: {}, color: 'purple'},
@@ -15,6 +15,7 @@ let cardGrouping = [
 
 
 const Dashboard = () => {
+    const covidListData = useSelector(state => state.dashboardReduce.covidListData)
     const classes = useStyles();
     const [cardGroup, setCardGroup] = React.useState([])
     const formatValue = value => `${toNumber(value)}`;
@@ -40,17 +41,18 @@ const Dashboard = () => {
     }
     
     React.useEffect(() => {
-        document.title = 'Dashboard | Covid Tracker'
-        Emitter.on('DATA_COVID', (newValue) => {
+        document.title = 'Dashboard | Covid Tracker';
+
+        if(!!covidListData) {
             cardGrouping = cardGrouping.map(_item => {
                 return {
-                    ...newValue,
+                    ...covidListData,
                     color: _item.color
                 }
             });
             setCardGroup(cardGrouping)
-        });
-    }, [cardGroup])
+        }
+    }, [covidListData])
 
     return (
         <>

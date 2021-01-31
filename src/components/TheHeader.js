@@ -1,4 +1,6 @@
 import React from 'react';
+import { useDispatch } from 'react-redux'
+
 import { makeStyles } from '@material-ui/core/styles';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
@@ -9,6 +11,7 @@ import Emitter from '../helper/eventBus';
 import logoHeader from '../assets/picture/logo/Header-logo.png';
 
 const TheHeader = () => {
+    const dispatch = useDispatch()
     const [selectItem, setSelectItem] = React.useState('');
     const [dataSelect, setDataSelect] = React.useState([]);
     const [dataCovid, setDataCovid] = React.useState(null)
@@ -50,8 +53,7 @@ const TheHeader = () => {
         try {
             let result = await reportModel.fetchDataCovid(country)
             setDataCovid(result.data)
-            Emitter.emit('DATA_COVID', result.data);
-            
+            dispatch({ type: 'set', covidListData: result.data })
         } catch (err) {
             console.log("🚀 ~ file: TheHeader.js ~ line 52 ~ fetchDataCovid ~ err", err)
         }
