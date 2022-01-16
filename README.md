@@ -1,4 +1,4 @@
-# Link Preview Project
+# Link Preview Project ReactJs
 [Preview Link](https://worldcovidtracker19.netlify.app/#/dashboard)
 # Installation 
 
